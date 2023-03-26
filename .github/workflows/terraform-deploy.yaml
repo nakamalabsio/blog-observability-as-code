@@ -14,9 +14,16 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+    # Inputs the workflow expects.
+    inputs:
+      apply:
+        description: 'TF File Path'     
+        required: true
+        default: 'aws_samples/create_ec2'
 
 jobs:
-  terraform-prepare:
+  terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
     permissions:
@@ -53,16 +60,6 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
-  terraform-apply:
-    needs: terraform-prepare
-    runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
-
-    steps:
-      - name: Trigger Final Step
-        run: echo "This step triggers the final step"
-        # Add any necessary environment variables or other configuration here
-
-      - name: Final Step
-        if: github.event.inputs.trigger_final_step
-        run: echo "This is the final step"
+      - name: Terraform Apply
+        if: inputs.apply && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
