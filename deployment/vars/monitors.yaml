@@ -19,7 +19,7 @@ awesome_monitor_number_two:
     avg(last_5m):sum:system.mem.used{env:*} > 8
   message: The awesome monitor number one has surpassed the defined threshold in the last 5 minutes! @Slack-your-slack-channel
   warning_threshold: 20
-  critical_threshold: 10
+  critical_threshold: 8
   include_tags: true
   restricted_roles: null
   env: production
