@@ -4,7 +4,7 @@ resource "datadog_monitor" "metric_alert" {
   message = var.message
 
   query = var.query
-  
+
   monitor_thresholds {
     warning  = var.warning_threshold
     critical = var.critical_threshold
