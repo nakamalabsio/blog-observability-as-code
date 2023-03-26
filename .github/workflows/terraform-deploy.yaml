@@ -5,9 +5,9 @@ defaults:
     working-directory: deployment
 
 env:
-  DD_API_KEY: ${{ vars.TF_VAR_DATADOG_API_KEY }}
-  DD_APP_KEY: ${{ vars.TF_VAR_DATADOG_APP_KEY }}
-  DD_HOST: ${{ vars.TF_VAR_DATADOG_API_URL }}
+  DD_API_KEY: ${{ secrets.TF_VAR_DATADOG_API_KEY }}
+  DD_APP_KEY: ${{ secrets.TF_VAR_DATADOG_APP_KEY }}
+  DD_HOST: ${{ secrets.TF_VAR_DATADOG_API_URL }}
 
 on:
   push:
@@ -53,7 +53,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: echo ${{ vars.TF_VAR_DATADOG_API_KEY }} && terraform plan -no-color -input=false
+        run: echo ${{ secrets.TF_VAR_DATADOG_API_KEY }} && terraform plan -no-color -input=false
         continue-on-error: true
 
       - name: Terraform Plan Status
