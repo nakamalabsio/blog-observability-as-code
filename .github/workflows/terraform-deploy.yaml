@@ -1,5 +1,9 @@
 name: "Terraform OaC"
 
+defaults:
+  run:
+    working-directory: deployment
+
 on:
   push:
     branches:
