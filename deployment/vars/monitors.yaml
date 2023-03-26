@@ -13,10 +13,10 @@ awesome_monitor_number_one:
     - testing:metric_alert
  
 awesome_monitor_number_two:
-  name: Awesome Monitor Numero Dos (RUM)
-  type: rum alert
+  name: Awesome Monitor Numero Dos (Metric)
+  type: metric alert
   query: |
-    rum("@type:session").rollup("count").last("5m") <= 10
+    avg(last_5m):sum:system.mem.used{env:*} > 8
   message: The awesome monitor number one has surpassed the defined threshold in the last 5 minutes! @Slack-your-slack-channel
   warning_threshold: 20
   critical_threshold: 10
@@ -24,4 +24,4 @@ awesome_monitor_number_two:
   restricted_roles: null
   env: production
   additional_tags:
-    - testing:rum_alert
+    - testing:metric_alert
